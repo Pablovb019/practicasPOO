@@ -90,7 +90,7 @@ Fecha::Fecha(int dia, int mes, int anno) : dia_(dia), mes_(mes), anno_(anno) {
  * @throw Fecha::Invalida si la fecha no es correcta
  */
 Fecha::Fecha(const char *c) {
-    sscanf(c, "%d/%d/%d", &dia_, &mes_, &anno_);
+    if(sscanf(c, "%d/%d/%d", &dia_, &mes_, &anno_) != 3) throw Fecha::Invalida("Fecha no válida");
 
     std::time_t tiempo_calendario = std::time(nullptr);
     tm* tiempo_descompuesto = std::localtime(&tiempo_calendario);
@@ -103,18 +103,12 @@ Fecha::Fecha(const char *c) {
 }
 
 /**
- * @brief Constructor de copia de la clase Fecha
- * @details Constructor de copia de la clase Fecha
- * @param fecha Fecha a copiar
- */
-Fecha::Fecha(const Fecha &fecha): dia_(fecha.dia_), mes_(fecha.mes_), anno_(fecha.anno_) {}
-
-/**
  * @brief Operador de asignación de la clase Fecha
  * @details Operador de asignación de la clase Fecha
  * @return Fecha& Referencia a la fecha actualizada
  */
 Fecha::operator const char *() const {
+    setlocale(LC_ALL, "es_ES.UTF-8"); // Para que muestre los meses y días en español
     static char *aux=new char[40];
     tm f={};
     f.tm_mday=dia_;
@@ -122,7 +116,7 @@ Fecha::operator const char *() const {
     f.tm_year=anno_-1900;
 
     mktime(&f);
-    strftime(aux,40,"%A,%d de %B de %Y",&f);
+    strftime(aux,40,"%A %d de %B de %Y",&f);
 
     return aux;
 }
@@ -137,7 +131,7 @@ Fecha::operator const char *() const {
  * @throw Fecha::Invalida si la fecha actualizada no es correcta
  */
 Fecha &Fecha::operator+=(int dias) {
-    dia_ += dias;
+    this->dia_ += dias;
     actualizarFecha();
     return *this;
 }
@@ -150,7 +144,7 @@ Fecha &Fecha::operator+=(int dias) {
  * @throw Fecha::Invalida si la fecha actualizada no es correcta
  */
 Fecha &Fecha::operator-=(int dias) {
-    dia_ += -dias;
+    *this += -dias;
     actualizarFecha();
     return *this;
 }
@@ -211,8 +205,7 @@ const Fecha Fecha::operator--(int) {
  */
 Fecha Fecha::operator+(int dias) const {
     Fecha aux(*this);
-    aux.dia_ += dias;
-    aux.actualizarFecha();
+    aux += dias;
     return aux;
 }
 
@@ -225,8 +218,7 @@ Fecha Fecha::operator+(int dias) const {
  */
 Fecha Fecha::operator-(int dias) const {
     Fecha aux(*this);
-    aux.dia_ += -dias;
-    aux.actualizarFecha();
+    aux += -dias;
     return aux;
 }
 
@@ -292,7 +284,7 @@ bool operator>(const Fecha &f1, const Fecha &f2) noexcept {
  * @return bool true si la fecha 1 es menor o igual que la fecha 2, false en caso contrario
  */
 bool operator<=(const Fecha &f1, const Fecha &f2) noexcept {
-    return !(f1 > f2);
+    return !(f2 < f1);
 }
 
 /**

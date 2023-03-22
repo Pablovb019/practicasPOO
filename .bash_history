@@ -207,3 +207,137 @@ cat fecha.hpp
 make clean
 make
 exit
+cd Vilar_Bustillo_Pablo/P0
+clear
+make clean
+clear
+make
+clear
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+./test-P0-auto 
+make valgrind
+make clean
+clear
+make test
+make tests
+clear
+make
+./test-P0-auto 
+make check
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+./test-P0-auto 
+make
+make clean
+clear
+make
+./test-P0-auto 
+make clean
+clear
+make
+make clean
+make
+make clean
+clear
+make
+./test-P0-auto 
+make clean
+clear
+make
+./test-P0-auto 
+make clean
+clear
+make
+./test-P0-auto 
+clear
+make clean
+clear
+make
+./test-P0-auto 
+make
+./test-P0-auto 
+make clean
+clear
+make
+./test-P0-auto 
+make clean
+clear
+make
+./test-P0-auto 
+make
+./test-P0-auto 
+make clean
+clear
+make
+./test-P0-auto 
+make clean
+clear
+make
+./test-P0-auto 
+make check
+make clean
+make clean
+clear
+make check
+make check
+make check
+make check
+make check
+make check
+clear
+make check
+clear
+make check
+make check
+clear
+make clean
+clear
+make all
+make clean
+clea
+clear
+make
+make clean
+clear
+make
+make check
+make tests
+make clean
+clear
+make
+./test-fechacadena-consola
+./test-P0-auto 
+make clean
+clear
+make
+./test-P0-auto 
+./test-fechacadena-consola
+clear
+make valgrind
+exit
+cd Vilar_Bustillo_Pablo/P0
+make clean
+clear
+make all
+make tests
+make check
+make valgrind
+exit

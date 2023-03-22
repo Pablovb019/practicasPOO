@@ -259,13 +259,35 @@ Cadena operator+(const Cadena& c1, const Cadena& c2) {
 
 // OPERADORES LÓGICOS
 /**
- * @brief Comprueba si 2 cadenas son iguales
- * @param c1 Cadena a comparar
- * @param c2 Cadena a comparar
+ * @brief Comprueba si 2 cadenas de la Clase Cadena son iguales
+ * @param c1 Cadena a comparar de tipo Cadena
+ * @param c2 Cadena a comparar de tipo Cadena
  * @return true si las cadenas son iguales, false en caso contrario
  */
 bool operator==(const Cadena& c1, const Cadena& c2) {
-    return strcmp(c1.c_str(), c2.c_str()) == 0;
+    return (strcmp(c1.c_str(), c2.c_str()) == 0);
+}
+
+/**
+ * @brief Comprueba si 1 cadena de la Clase Cadena y otra de tipo char* son iguales
+ * @param c1 Cadena a comparar de tipo Cadena
+ * @param c2 Cadena a comparar de tipo char*
+ * @return true si las cadenas son iguales, false en caso contrario
+ */
+
+bool operator==(const Cadena& c1, const char* c2) {
+    return (strcmp(c1.c_str(), c2) == 0);
+}
+
+/**
+ * @brief Comprueba si 1 cadena de la Clase Cadena y otra de tipo char* son iguales
+ * @param c1 Cadena a comparar de tipo char*
+ * @param c2 Cadena a comparar de tipo Cadena
+ * @return true si las cadenas son iguales, false en caso contrario
+ */
+
+bool operator==(const char* c1, const Cadena& c2) {
+    return (strcmp(c1, c2.c_str()) == 0);
 }
 
 /**

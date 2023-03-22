@@ -24,7 +24,6 @@ public:
     // CONSTRUCTORES
     explicit Fecha(int dia = 0, int mes = 0, int anno = 0);
     Fecha(const char* c);
-    Fecha(const Fecha& fecha);
     operator const char* () const;
 
     // OBSERVADORES
