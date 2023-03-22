@@ -341,3 +341,6 @@ make tests
 make check
 make valgrind
 exit
+cd Vilar_Bustillo_Pablo/P0
+make clean
+exit

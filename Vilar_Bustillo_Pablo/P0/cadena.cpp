@@ -307,7 +307,9 @@ bool operator!=(const Cadena& c1, const Cadena& c2) {
  * @return true si la cadena c1 es menor que la cadena c2, false en caso contrario
  */
 bool operator<(const Cadena& c1, const Cadena& c2) {
-    return strcmp(c1.c_str(), c2.c_str()) < 0;
+    if (c1.length() < c2.length()) return true;
+    else if (c1.length() > c2.length()) return false;
+    else return (strcmp(c1.c_str(), c2.c_str()) < 0);
 }
 
 /**
