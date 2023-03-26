@@ -63,10 +63,25 @@ Cadena operator+(const Cadena& c1, const Cadena& c2);
 bool operator==(const Cadena& c1, const Cadena& c2);
 bool operator==(const Cadena& c1, const char* c2);
 bool operator==(const char* c1, const Cadena& c2);
+
 bool operator!=(const Cadena& c1, const Cadena& c2);
+bool operator!=(const Cadena& c1, const char* c2);
+bool operator!=(const char* c1, const Cadena& c2);
+
 bool operator<(const Cadena& c1, const Cadena& c2);
+bool operator<(const Cadena& c1, const char* c2);
+bool operator<(const char* c1, const Cadena& c2);
+
 bool operator>(const Cadena& c1, const Cadena& c2);
+bool operator>(const Cadena& c1, const char* c2);
+bool operator>(const char* c1, const Cadena& c2);
+
 bool operator<=(const Cadena& c1, const Cadena& c2);
+bool operator<=(const Cadena& c1, const char* c2);
+bool operator<=(const char* c1, const Cadena& c2);
+
 bool operator>=(const Cadena& c1, const Cadena& c2);
+bool operator>=(const Cadena& c1, const char* c2);
+bool operator>=(const char* c1, const Cadena& c2);
 
 #endif

@@ -291,9 +291,9 @@ bool operator==(const char* c1, const Cadena& c2) {
 }
 
 /**
- * @brief Comprueba si 2 cadenas son distintas
- * @param c1 Cadena a comparar
- * @param c2 Cadena a comparar
+ * @brief Comprueba si 2 cadenas de la Clase Cadena son distintas
+ * @param c1 Cadena de tipo Cadena a comparar
+ * @param c2 Cadena de tipo Cadena a comparar
  * @return true si las cadenas son distintas, false en caso contrario
  */
 bool operator!=(const Cadena& c1, const Cadena& c2) {
@@ -301,9 +301,29 @@ bool operator!=(const Cadena& c1, const Cadena& c2) {
 }
 
 /**
- * @brief Comprueba si una cadena es menor que otra
- * @param c1 Cadena a comparar
- * @param c2 Cadena a comparar
+ * @brief Comprueba si 1 cadena de la Clase Cadena y otra de tipo char* son distintas
+ * @param c1 Cadena de tipo Cadena a comparar
+ * @param c2 Cadena de tipo char* a comparar
+ * @return true si las cadenas son distintas, false en caso contrario
+ */
+bool operator!=(const Cadena& c1, const char* c2) {
+    return !(c1 == c2);
+}
+
+/**
+ * @brief Comprueba si 1 cadena de la Clase Cadena y otra de tipo char* son distintas
+ * @param c1 Cadena de tipo char* a comparar
+ * @param c2 Cadena de tipo Cadena a comparar
+ * @return true si las cadenas son distintas, false en caso contrario
+ */
+bool operator!=(const char* c1, const Cadena& c2) {
+    return !(c1 == c2);
+}
+
+/**
+ * @brief Comprueba si una cadena de la Clase Cadena es menor que otra de la misma Clase
+ * @param c1 Cadena a comparar de tipo Cadena
+ * @param c2 Cadena a comparar de tipo Cadena
  * @return true si la cadena c1 es menor que la cadena c2, false en caso contrario
  */
 bool operator<(const Cadena& c1, const Cadena& c2) {
@@ -313,9 +333,33 @@ bool operator<(const Cadena& c1, const Cadena& c2) {
 }
 
 /**
- * @brief Comprueba si una cadena es mayor que otra
- * @param c1 Cadena a comparar
- * @param c2 Cadena a comparar
+ * @brief Comprueba si una cadena de la Clase Cadena es menor que otra de tipo char*
+ * @param c1 Cadena a comparar de tipo Cadena
+ * @param c2 Cadena a comparar de tipo char*
+ * @return true si la cadena c1 es menor que la cadena c2, false en caso contrario
+ */
+bool operator<(const Cadena& c1, const char* c2) {
+    if (c1.length() < strlen(c2)) return true;
+    else if (c1.length() > strlen(c2)) return false;
+    else return (strcmp(c1.c_str(), c2) < 0);
+}
+
+/**
+ * @brief Comprueba si una cadena de tipo char* es menor que otra de la Clase Cadena
+ * @param c1 Cadena a comparar de tipo char*
+ * @param c2 Cadena a comparar de tipo Cadena
+ * @return true si la cadena c1 es menor que la cadena c2, false en caso contrario
+ */
+bool operator<(const char* c1, const Cadena& c2) {
+    if (strlen(c1) < c2.length()) return true;
+    else if (strlen(c1) > c2.length()) return false;
+    else return (strcmp(c1, c2.c_str()) < 0);
+}
+
+/**
+ * @brief Comprueba si una cadena de la Clase Cadena es mayor que otra de la misma Clase
+ * @param c1 Cadena a comparar de tipo Cadena
+ * @param c2 Cadena a comparar de tipo Cadena
  * @return true si la cadena c1 es mayor que la cadena c2, false en caso contrario
  */
 bool operator>(const Cadena& c1, const Cadena& c2) {
@@ -323,9 +367,29 @@ bool operator>(const Cadena& c1, const Cadena& c2) {
 }
 
 /**
- * @brief Comprueba si una cadena es menor o igual que otra
- * @param c1 Cadena a comparar
- * @param c2 Cadena a comparar
+ * @brief Comprueba si una cadena de la Clase Cadena es mayor que otra de tipo char*
+ * @param c1 Cadena a comparar de tipo Cadena
+ * @param c2 Cadena a comparar de tipo char*
+ * @return true si la cadena c1 es mayor que la cadena c2, false en caso contrario
+ */
+bool operator>(const Cadena& c1, const char* c2) {
+    return c2 < c1;
+}
+
+/**
+ * @brief Comprueba si una cadena de tipo char* es mayor que otra de la Clase Cadena
+ * @param c1 Cadena a comparar de tipo char*
+ * @param c2 Cadena a comparar de tipo Cadena
+ * @return true si la cadena c1 es mayor que la cadena c2, false en caso contrario
+ */
+bool operator>(const char* c1, const Cadena& c2) {
+    return c2 < c1;
+}
+
+/**
+ * @brief Comprueba si una cadena de la Clase Cadena es menor o igual que otra de la misma Clase
+ * @param c1 Cadena a comparar de tipo Cadena
+ * @param c2 Cadena a comparar de tipo Cadena
  * @return true si la cadena c1 es menor o igual que la cadena c2, false en caso contrario
  */
 
@@ -334,11 +398,51 @@ bool operator<=(const Cadena& c1, const Cadena& c2) {
 }
 
 /**
- * @brief Comprueba si una cadena es mayor o igual que otra
- * @param c1 Cadena a comparar
- * @param c2 Cadena a comparar
+ * @brief Comprueba si una cadena de la Clase Cadena es menor o igual que otra de tipo char*
+ * @param c1 Cadena a comparar de tipo Cadena
+ * @param c2 Cadena a comparar de tipo char*
+ * @return true si la cadena c1 es menor o igual que la cadena c2, false en caso contrario
+ */
+bool operator<=(const Cadena& c1, const char* c2) {
+    return !(c2 < c1);
+}
+
+/**
+ * @brief Comprueba si una cadena de tipo char* es menor o igual que otra de la Clase Cadena
+ * @param c1 Cadena a comparar de tipo char*
+ * @param c2 Cadena a comparar de tipo Cadena
+ * @return true si la cadena c1 es menor o igual que la cadena c2, false en caso contrario
+ */
+bool operator<=(const char* c1, const Cadena& c2) {
+    return !(c2 < c1);
+}
+
+/**
+ * @brief Comprueba si una cadena de la Clase Cadena es mayor o igual que otra de la misma Clase
+ * @param c1 Cadena a comparar de tipo Cadena
+ * @param c2 Cadena a comparar de tipo Cadena
  * @return true si la cadena c1 es mayor o igual que la cadena c2, false en caso contrario
  */
 bool operator>=(const Cadena& c1, const Cadena& c2) {
+    return !(c1 < c2);
+}
+
+/**
+ * @brief Comprueba si una cadena de la Clase Cadena es mayor o igual que otra de tipo char*
+ * @param c1 Cadena a comparar de tipo Cadena
+ * @param c2 Cadena a comparar de tipo char*
+ * @return true si la cadena c1 es mayor o igual que la cadena c2, false en caso contrario
+ */
+bool operator>=(const Cadena& c1, const char* c2) {
+    return !(c1 < c2);
+}
+
+/**
+ * @brief Comprueba si una cadena de tipo char* es mayor o igual que otra de la Clase Cadena
+ * @param c1 Cadena a comparar de tipo char*
+ * @param c2 Cadena a comparar de tipo Cadena
+ * @return true si la cadena c1 es mayor o igual que la cadena c2, false en caso contrario
+ */
+bool operator>=(const char* c1, const Cadena& c2) {
     return !(c1 < c2);
 }
