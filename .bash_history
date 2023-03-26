@@ -344,3 +344,120 @@ exit
 cd Vilar_Bustillo_Pablo/P0
 make clean
 exit
+cd Vilar_Bustillo_Pablo/P0
+make check
+make clean
+exit
+cd Vilar_Bustillo_Pablo/P1
+ls
+clear
+make
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+./test-P1-auto 
+make valgrind
+./test-P1-auto 
+make check
+make clean
+clear
+make
+make tests
+make clean
+clear
+make
+make
+make
+make clean
+clear
+make
+make clean
+clear
+make
+./test-P1-auto 
+make clean
+clear
+make
+./test-P1-auto 
+make valgrind
+make clean
+clear
+make
+./test-P1-auto 
+cat fecha.cpp
+cat cadena.cpp
+./test-P1-auto 
+make clean
+clear
+make
+make clean
+clear
+make
+./test-P1-auto 
+make clean
+clear
+make
+./test-P1-auto 
+make clean
+clear
+make
+./test-P1-auto 
+make check
+make valgrind
+make clean
+clear
+make
+./test-P1-auto 
+make valgrind
+make clean
+clear
+make
+./test-P1-auto 
+make check
+make clean
+clear
+make
+make clean
+clear
+make
+make
+make clean
+clear
+make
+clear
+make clean
+clear
+make
+make clean
+clear
+make
+./test-P1-auto 
+make check
+make clean
+clear
+make check
+make tests
+make valgrind
+clear
+make clean
+clear
+make dist
+clear
+make
+make clean
+clear
+exit
