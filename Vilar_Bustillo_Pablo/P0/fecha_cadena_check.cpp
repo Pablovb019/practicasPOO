@@ -108,6 +108,10 @@ int main(int argc, const char **argv) {
     cc.destructorDeleteMember("Cadena", {"s_"},
 			      "Revisa el destructor de la clase.");
     cc.releaseVariable("Revisa la asignación y liberación de memoria.");
+   
+    cc.method({"operator="}, {{"const char *"}}, "Cadena", {"noconst"}, "No se detecta" 
+		    " el operador de asignación con conversión desde cadena"
+		    " de bajo nivel.");
     vector<string> methodNames = {"length"};
     vector<vector<string> > parametersMethods = {{"?"}};
     cc.inlineMethod(methodNames, parametersMethods, "Cadena", {"?"},
