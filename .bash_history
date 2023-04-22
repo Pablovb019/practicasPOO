@@ -51,3 +51,44 @@ ls
 tar -tvzf Vilar_Bustillo_Pablo.tar.gz 
 end
 exit
+cd P2
+cd Vilar_Bustillo_PabloP2
+cd Vilar_Bustillo_Pablo/P2
+clear
+ls
+make
+make clean
+clear
+make
+make clean
+clear
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+make clean
+cleaar
+clear
+make
+make clean
+clear
+make clean
+clear
+make
+make clean
+clear
+ls
+cat usuario.hpp
+clear
+cat usuario.cpp
+clear
+make
+make clean
+clear
+exit

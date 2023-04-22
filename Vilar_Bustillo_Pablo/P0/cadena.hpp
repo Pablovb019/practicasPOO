@@ -12,7 +12,7 @@ public:
     // CONSTRUCTORES
     explicit Cadena(size_t tam = 0, char c = ' ');
     Cadena(const Cadena& c); // Constructor de copia
-    explicit Cadena(const char* c); // Constructor de conversión
+    Cadena(const char* c); // Constructor de conversión
     Cadena(Cadena&& c) noexcept;  // Constructor de movimiento
     operator const char* () const;
 
