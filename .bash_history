@@ -45,3 +45,9 @@ ls
 cd ../P0/
 ls
 exit
+ls -1 Vilar_Bustillo_Pablo/P1/{cadena,fecha}.[ch]pp | tar -cvzf Vilar_Bustillo_Pablo.tar.gz -T -
+clear
+ls
+tar -tvzf Vilar_Bustillo_Pablo.tar.gz 
+end
+exit

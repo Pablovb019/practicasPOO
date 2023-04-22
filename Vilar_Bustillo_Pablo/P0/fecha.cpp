@@ -130,7 +130,7 @@ Fecha::operator const char *() const {
  * @return Fecha& Referencia a la fecha actualizada
  * @throw Fecha::Invalida si la fecha actualizada no es correcta
  */
-Fecha &Fecha::operator+=(int dias) {
+Fecha Fecha::operator+=(int dias) {
     this->dia_ += dias;
     actualizarFecha();
     return *this;

@@ -32,7 +32,7 @@ public:
     int anno() const noexcept { return anno_; }
 
     // OPERADORES
-    Fecha& operator +=(int dias); // suma de días
+    Fecha operator +=(int dias); // suma de días
     Fecha& operator -=(int dias); // resta de días
     Fecha& operator ++(); // preincremento
     Fecha operator ++(int); // postincremento
