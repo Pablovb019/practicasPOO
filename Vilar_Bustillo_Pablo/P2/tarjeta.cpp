@@ -29,7 +29,7 @@ Numero::Numero(const Cadena& numero) {
 
     if (aux2.length() < 13 || aux2.length() > 19) throw Incorrecto(Razon::LONGITUD);
     if (!luhn(aux2)) throw Incorrecto(Razon::NO_VALIDO);
-    numero_ = aux;
+    numero_ = aux2;
 }
 
 bool operator <(const Numero& n1, const Numero& n2) {
@@ -47,6 +47,10 @@ bool operator <(const Numero& n1, const Numero& n2) {
  : numero_(numero), titular_(&usuario), caducidad_(fecha), activa_(true){
     if (fecha < Fecha()){
         throw Caducada(fecha);
+    }
+
+    if (usuario.tarjetas().find(numero) != usuario.tarjetas().end()){
+        throw Num_duplicado(numero);
     }
 
     titular_ -> es_titular_de(*this);
@@ -109,9 +113,21 @@ Tarjeta::Tipo Tarjeta::tipo() const {
  * @return Flujo de salida
  */
 ostream& operator <<(ostream& os, const Tarjeta& t) {
+    Cadena nombre = t.titular() -> nombre();
+    Cadena apellidos = t.titular() -> apellidos();
+
+    // Nombre y apellidos en mayusculas
+    for (size_t i = 0; i < nombre.length(); i++) {
+        nombre[i] = toupper(nombre[i]);
+    }
+
+    for (size_t i = 0; i < apellidos.length(); i++) {
+        apellidos[i] = toupper(apellidos[i]);
+    }
+
     os << t.tipo() << endl;
     os << t.numero() << endl;
-    os << t.titular() << endl;
+    os << nombre << " " << apellidos << endl;
     os << "Caduca: " << setfill('0') << setw(2) << t.caducidad().mes() << "/" << (t.caducidad().anno() % 100) << endl;
     return os;
 }

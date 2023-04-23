@@ -131,7 +131,7 @@ const char* Fecha::cadena() const {
  * @return Fecha& Referencia a la fecha actualizada
  * @throw Fecha::Invalida si la fecha actualizada no es correcta
  */
-Fecha Fecha::operator+=(int dias) {
+Fecha &Fecha::operator+=(int dias) {
     this->dia_ += dias;
     actualizarFecha();
     return *this;
@@ -146,7 +146,6 @@ Fecha Fecha::operator+=(int dias) {
  */
 Fecha &Fecha::operator-=(int dias) {
     *this += -dias;
-    actualizarFecha();
     return *this;
 }
 
@@ -157,7 +156,6 @@ Fecha &Fecha::operator-=(int dias) {
  */
 Fecha &Fecha::operator++() {
     *this += 1;
-    actualizarFecha();
     return *this;
 }
 
@@ -169,7 +167,6 @@ Fecha &Fecha::operator++() {
 Fecha Fecha::operator++(int) {
     Fecha aux = *this;
     *this += 1;
-    actualizarFecha();
     return aux;
 }
 
@@ -180,7 +177,6 @@ Fecha Fecha::operator++(int) {
  */
 Fecha &Fecha::operator--() {
     *this += -1;
-    actualizarFecha();
     return *this;
 }
 
@@ -192,7 +188,6 @@ Fecha &Fecha::operator--() {
 const Fecha Fecha::operator--(int) {
     Fecha aux = *this;
     *this += -1;
-    actualizarFecha();
     return aux;
 }
 

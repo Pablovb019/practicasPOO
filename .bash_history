@@ -92,3 +92,140 @@ make
 make clean
 clear
 exit
+cd Vilar_Bustillo_Pablo/P2
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make help
+make check
+clear
+make help
+make test-auto
+make tests
+make test-consola
+make clean
+clear
+make
+make valgrind
+make clean
+clear
+make
+make valgrind
+make tests
+make
+make clean
+clear
+make
+.
+make valgrind
+./test-consola.cpp 
+ls
+./test-P2-consola 
+./test-P2-auto 
+clear
+make clean
+clear
+make
+make clean
+clear
+make
+make valgrind
+clear
+make help
+make test-auto
+clear
+make clean
+clear
+make
+make help
+make test-auto
+make test-consola
+clear
+make clean
+clear
+make
+make clean
+make
+make help
+make test-auto
+make test-consola
+make valgrind
+make check
+make tests
+make clean
+clear+
+clear
+make
+make test-auto
+make
+make test-auto
+make
+make test-auto
+make clean
+clear
+make
+make test-auto
+cd ../P1
+make
+make clean
+clear
+cd ../P2
+make clean
+clear
+cd ../P1
+clear
+make
+./test-P1-auto 
+cat fecha.cpp
+clear
+make clean
+clear
+make
+./test-P1-auto 
+make clean
+clear
+make
+./test-P1-auto 
+make
+make clean
+cat fecha.cpp 
+make
+./test-P1-auto 
+make clean
+clear
+make
+./test-P1-auto 
+make
+./test-P1-auto 
+make
+make
+./test-P1-auto 
+make clean
+clear
+cd ../P2
+clear
+make
+clear
+make help
+make test-auto
+make check
+make valgrind
+make test-consola
+clear
+make help
+make distclean
+ls
+clear
+make dist
