@@ -229,3 +229,12 @@ make distclean
 ls
 clear
 make dist
+cd Vilar_Bustillo_Pablo\P2
+cd Vilar_Bustillo_Pablo/P2
+clear
+make
+make test-consola
+make test-auto
+make clean
+clear
+exit
