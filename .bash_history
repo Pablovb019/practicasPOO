@@ -238,3 +238,112 @@ make test-auto
 make clean
 clear
 exit
+cd Vilar_Bustillo_Pablo
+ls
+cd P3
+clear
+make
+clear
+make clean
+clear
+make
+clear
+ls
+make clean
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make clean
+clear
+make
+make
+make
+make clean
+clear
+make
+make
+make
+make clean
+clear
+make
+make help
+make test-auto
+make valgrind
+make
+make valgrind
+clear
+make valgrind
+make clean
+clear
+make
+make valgrind
+make clean
+clear
+make
+make valgrind
+make clean
+clear
+make test-auto
+make clean
+clear
+make
+make
+make check
+make check
+make clean
+clear
+make
+make check
+make check
+make clean
+make clean
+clear
+make
+make check
+make test-auto
+make valgrind
+make valgrind
+make valgrind
+make valgrind
+make consola
+make test-consola
+clear
+make valgrind
+make clean
+clear
+make
+make tests
+make valgrind
+make check
+make dist
+make check
+make clean
+clear
+make
+make check
+make test-consola
+exit
+cd Vilar_Bustillo_Pablo/P3
+make test-consola
+clear
+./test-consola > consola.txt
+ls
+./test-P3-consola > consola.txt
+./test-P3-consola
+clear
+make test-consola > consola.txt
+make test-consola
+make clean
+clear
