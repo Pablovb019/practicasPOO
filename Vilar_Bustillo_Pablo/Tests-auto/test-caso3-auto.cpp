@@ -35,6 +35,7 @@ namespace {
   Articulo articulo1("111", "The Standard Template Library", fHoy, 42.10, 50),
     articulo2("110", "Fundamentos de C++", fHoy, 35.95, 50);
 #endif
+
   Usuario* pU { nullptr };
     
   Usuario_Pedido  *pAsocUsuarioPedido;
@@ -140,17 +141,29 @@ FCTMF_FIXTURE_SUITE_BGN(test_p3_clases) {
   // --- Pruebas de Pedido
 
   FCT_TEST_BGN(Pedido - carrito vacio) {
+    Usu_Ped* pU_P = reinterpret_cast<Usu_Ped*>(pAsocUsuarioPedido);
+    Ped_Art* pP_A = reinterpret_cast<Ped_Art*>(pAsocPedidoArticulo);
     try {
       Pedido {*pAsocUsuarioPedido, *pAsocPedidoArticulo, *pU, *pTarjetaU, fHoy};
       fct_xchk(false, "Se esperaba una excepción Pedido::Vacio");
     }
     catch(const Pedido::Vacio& ex) {
       fct_chk(&ex.usuario() == pU);
+      fct_xchk(pU_P->pedidos_.empty(), "En pedido no viable: "
+              "enlace Usuario-Pedido incorrecto.");
+      fct_xchk(pU_P->cliente_.empty(), "En pedido no viable: "
+              "enlace Pedido-Usuario incorrecto.");
+      fct_xchk(pP_A->pedidos_articulos_.empty(), "En pedido no viable: "
+              "enlace Pedido-Articulo incorrecto.");
+      fct_xchk(pP_A->articulos_pedidos_.empty(), "En pedido no viable: "
+              "enlace Articulo-Pedido incorrecto.");
     }
   }
   FCT_TEST_END();
 
   FCT_TEST_BGN(Pedido - impostor) {
+    Usu_Ped* pU_P = reinterpret_cast<Usu_Ped*>(pAsocUsuarioPedido);
+    Ped_Art* pP_A = reinterpret_cast<Ped_Art*>(pAsocPedidoArticulo);
     pU2->compra(articulo1, 3);
     try {
       Pedido {*pAsocUsuarioPedido, *pAsocPedidoArticulo, *pU2, *pTarjetaU, fHoy};
@@ -158,6 +171,17 @@ FCTMF_FIXTURE_SUITE_BGN(test_p3_clases) {
     }
     catch(const Pedido::Impostor& ex) {
       fct_chk(&ex.usuario() == pU2);
+      fct_xchk(articulo1.stock() == 50, "En pedido no viable: "
+              "articulo1.stock() == %d != 50", articulo1.stock());
+      fct_xchk(pU_P->pedidos_.empty(), "En pedido no viable: "
+              "enlace Usuario-Pedido incorrecto.");
+      fct_xchk(pU_P->cliente_.empty(), "En pedido no viable: "
+              "enlace Pedido-Usuario incorrecto.");
+      fct_xchk(pP_A->pedidos_articulos_.empty(), "En pedido no viable: "
+              "enlace Pedido-Articulo incorrecto.");
+      fct_xchk(pP_A->articulos_pedidos_.empty(), "En pedido no viable: "
+              "enlace Articulo-Pedido incorrecto.");
+      articulo1.stock() = 50;
     }
   }
   FCT_TEST_END();
@@ -225,22 +249,53 @@ FCTMF_FIXTURE_SUITE_BGN(test_p3_clases) {
   FCT_TEST_END();
   
   FCT_TEST_BGN(Pedido - tarjeta caducada) {
-    pU->compra(articulo1, 4649);
+    Usu_Ped* pU_P = reinterpret_cast<Usu_Ped*>(pAsocUsuarioPedido);
+    Ped_Art* pP_A = reinterpret_cast<Ped_Art*>(pAsocPedidoArticulo);
+    pU->compra(articulo1, 4);
     try {
       Pedido {*pAsocUsuarioPedido, *pAsocPedidoArticulo, *pU, *pTarjetaU, fHoy + 30};
       fct_xchk(false, "Se esperaba una excepción Tarjeta::Caducada");
     }
     catch (const Tarjeta::Caducada& ex) {
       fct_chk(ex.cuando() == fUnaSemana);
+
+      fct_xchk(articulo1.stock() == 50, "En pedido no viable: "
+              "articulo1.stock() == %d != 50", articulo1.stock());
+      fct_xchk(pU_P->pedidos_.empty(), "En pedido no viable: "
+              "enlace Usuario-Pedido incorrecto.");
+      fct_xchk(pU_P->cliente_.empty(), "En pedido no viable: "
+              "enlace Pedido-Usuario incorrecto.");
+      fct_xchk(pP_A->pedidos_articulos_.empty(), "En pedido no viable: "
+              "enlace Pedido-Articulo incorrecto.");
+      fct_xchk(pP_A->articulos_pedidos_.empty(), "En pedido no viable: "
+              "enlace Articulo-Pedido incorrecto.");
+      articulo1.stock() = 50;
     }
   }
   FCT_TEST_END();
 
   FCT_TEST_BGN(Pedido - tarjeta desactivada) {
-    pU->compra(articulo1, 4649);
+    Usu_Ped* pU_P = reinterpret_cast<Usu_Ped*>(pAsocUsuarioPedido);
+    Ped_Art* pP_A = reinterpret_cast<Ped_Art*>(pAsocPedidoArticulo);
+    pU->compra(articulo2, 4);
     pTarjetaU->activa(false);
-    fct_chk_ex(Tarjeta::Desactivada,
-	       Pedido(*pAsocUsuarioPedido, *pAsocPedidoArticulo, *pU, *pTarjetaU, fHoy));
+    try {
+      Pedido(*pAsocUsuarioPedido, *pAsocPedidoArticulo, *pU, *pTarjetaU, fHoy);
+      fct_xchk(false, "Se esperaba una excepción Tarjeta::Caducada");
+    }
+    catch (const Tarjeta::Desactivada& ex) {
+      fct_xchk(articulo2.stock() == 50, "En pedido no viable: "
+              "articulo1.stock() == %d != 50", articulo1.stock());
+      fct_xchk(pU_P->pedidos_.empty(), "En pedido no viable: "
+              "enlace Usuario-Pedido incorrecto.");
+      fct_xchk(pU_P->cliente_.empty(), "En pedido no viable: "
+              "enlace Pedido-Usuario incorrecto.");
+      fct_xchk(pP_A->pedidos_articulos_.empty(), "En pedido no viable: "
+              "enlace Pedido-Articulo incorrecto.");
+      fct_xchk(pP_A->articulos_pedidos_.empty(), "En pedido no viable: "
+              "enlace Articulo-Pedido incorrecto.");
+      articulo2.stock() = 50;
+    }
   }
   FCT_TEST_END();
   
@@ -304,8 +359,8 @@ FCTMF_FIXTURE_SUITE_BGN(test_p3_clases) {
     const unique_ptr<const Pedido> pPed {
       new Pedido {*pAsocUsuarioPedido, *pAsocPedidoArticulo, *pU, *pTarjetaU}
     };
-    fct_xchk(pPed->numero() == 2, "Número de artículos en pedido incorrecto: "
-             "pPed->numero() == %d != 2", pPed->numero());
+    fct_xchk(pPed->numero() == 2, "Número de pedido incorrecto: "
+             "pPed->numero() == %d != %d", pPed->numero(), 2);
     fct_xchk(pPed->tarjeta() == pTarjetaU,
              "La tarjeta asociada al pedido no es la del pago.");
     fct_xchk(pPed->fecha() == fHoy, "Fecha del pedido incorrecta.");

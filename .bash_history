@@ -347,3 +347,11 @@ make test-consola > consola.txt
 make test-consola
 make clean
 clear
+cd Vilar_Bustillo_Pablo/P3
+make
+make tests
+make valgrind
+make check+
+make check
+make clean
+exit

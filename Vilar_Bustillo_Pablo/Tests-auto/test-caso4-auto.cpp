@@ -318,7 +318,7 @@ FCTMF_FIXTURE_SUITE_BGN(test_p4) {
 //    pUsuarioPedido->compra(cdrom, 1);
     pUsuarioPedido->compra(revista, 1);
     pUsuarioPedido->compra(eBookNoExpirado, 1);
-    Pedido p(usuPed, pedArt, *pUsuarioPedido, *pTarjetaPedido);
+    thread_local Pedido p(usuPed, pedArt, *pUsuarioPedido, *pTarjetaPedido);
 
     // Cálculo en coma flotante con precisión limitada: no se puede
     // usar == directamente. Hay que permitir un cierto margen de
@@ -333,8 +333,7 @@ FCTMF_FIXTURE_SUITE_BGN(test_p4) {
 //    pUsuarioPedido->compra(cdrom, 1);
     pUsuarioPedido->compra(revista, 1);
     pUsuarioPedido->compra(eBookExpirado, 1);
-    Pedido p(usuPed, pedArt, *pUsuarioPedido, *pTarjetaPedido);
-
+    thread_local Pedido p(usuPed, pedArt, *pUsuarioPedido, *pTarjetaPedido);
 //    fct_chk_eq_dbl(p.total(), cdrom.precio());
     fct_chk_eq_dbl(p.total(), revista.precio());
   }
@@ -342,8 +341,7 @@ FCTMF_FIXTURE_SUITE_BGN(test_p4) {
 
   FCT_TEST_BGN(LibroDigital - eBook expirado y carrito queda vacio) {
     pUsuarioPedido->compra(eBookExpirado, 1);
-    fct_chk_ex(Pedido::Vacio, 
-	       Pedido(usuPed, pedArt, *pUsuarioPedido, *pTarjetaPedido));
+    fct_chk_ex(Pedido::Vacio, Pedido(usuPed, pedArt, *pUsuarioPedido, *pTarjetaPedido));
   }
   FCT_TEST_END();
 
