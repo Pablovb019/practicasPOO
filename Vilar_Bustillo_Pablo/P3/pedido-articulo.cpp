@@ -93,7 +93,7 @@ ostream &Pedido_Articulo::mostrarDetallePedidos(ostream &os) const noexcept {
     for (auto &it: ped_art_) {
         os << "Pedido núm. " << it.first->numero();
         os << "\tCliente: " << it.first->tarjeta()->titular()->nombre() << " \n";
-        os << "Fecha: " << it.first->fecha() << it.second;
+        os << "Fecha: " << it.first->fecha() << endl;
         os << detalle(*it.first);
         total += it.first->total();
     }
@@ -127,16 +127,15 @@ ostream &Pedido_Articulo::mostrarVentasArticulos(ostream &os) const noexcept {
  */
 ostream& operator <<(ostream& os, const Pedido_Articulo::ItemsPedido& ip){
     double total = 0.0;
-    Pedido_Articulo::ItemsPedido::const_iterator cit;
 
     os << endl << "====================================================\n" << endl;
     os << " PVP\tCantidad\tArticulo\n" << endl;
     os << "====================================================\n" << endl;
 
     for (auto& cit: ip) {
-        total += (cit.second.precio_venta() * cit.second.cantidad());
         os << fixed << setprecision(2) << cit.second.precio_venta() << " €\t" << cit.second.cantidad() << "\t\t";
         os << "[" << cit.first->referencia() << "] " << cit.first->titulo() << endl;
+        total += (cit.second.precio_venta() * cit.second.cantidad());
     }
 
     os << "====================================================\n" << endl;
@@ -155,17 +154,16 @@ ostream& operator <<(ostream& os, const Pedido_Articulo::ItemsPedido& ip){
 ostream& operator <<(ostream& os, const Pedido_Articulo::Pedidos& p){
     double precio = 0.0;
     unsigned cantidad = 0;
-    Pedido_Articulo::Pedidos::const_iterator cit;
 
     os << endl << "====================================================\n" << endl;
     os << " PVP\tCantidad\tFecha de venta\n";
     os << "====================================================\n" << endl;
 
-    for(auto it: p){
-        os << fixed << setprecision(2) << it.second.precio_venta() << " €\t" << it.second.cantidad() << "\t\t";
-        os << it.first->fecha() << endl;
-        precio += it.second.precio_venta() * it.second.cantidad();
-        cantidad += it.second.cantidad();
+    for(auto cit: p){
+        os << fixed << setprecision(2) << cit.second.precio_venta() << " €\t" << cit.second.cantidad() << "\t\t";
+        os << cit.first->fecha() << endl;
+        precio += cit.second.precio_venta() * cit.second.cantidad();
+        cantidad += cit.second.cantidad();
     }
 
     os << "====================================================\n" << endl;
