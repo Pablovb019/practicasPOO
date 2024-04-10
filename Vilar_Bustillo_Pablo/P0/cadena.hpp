@@ -13,8 +13,7 @@ public:
     explicit Cadena(size_t tam = 0, char c = ' ');
     Cadena(const Cadena& c); // Constructor de copia
     Cadena(const char* c); // Constructor de conversión
-    Cadena(Cadena&& c) noexcept;  // Constructor de movimiento
-    operator const char* () const;
+    operator const char* () const noexcept { return s_; };
 
     // DESTRUCTOR
     ~Cadena();
@@ -26,18 +25,14 @@ public:
     // FUNCIONES
     size_t length() noexcept { return tam_; };
     size_t length() const noexcept { return tam_; };
-    size_t length(const char* c) noexcept;
-    size_t length(const char* c) const noexcept;
     const char* c_str() const noexcept { return s_; };
 
     // OPERADORES ARITMÉTICOS
     Cadena operator+=(const Cadena& c);
-    Cadena operator+=(const char* c);
 
     // OPERADORES DE ASIGNACIÓN
     Cadena& operator=(const Cadena& c);
     Cadena& operator=(const char* c);
-    Cadena& operator= (Cadena&& c);
 
     // OPERADORES DE INDICE
     char& operator[](size_t i) noexcept;
@@ -48,12 +43,9 @@ public:
 
 
 private:
-    char * s_;
+    static char vacio[1];
     size_t tam_;
-
-    // FUNCIONES AUXILIARES
-    void copiar(const Cadena& c);
-    void copiar(const char* c);
+    char * s_;
 };
 
 // OPERADORES ARITMÉTICOS

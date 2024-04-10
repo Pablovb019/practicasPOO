@@ -1,6 +1,8 @@
 #include "cadena.hpp"
 using namespace std;
 
+char Cadena::vacio[1] = {'\0'};
+
 // CONSTRUCTORES
 /**
  * @brief Constructor de la clase Cadena
@@ -8,11 +10,16 @@ using namespace std;
  * @param c Carácter con el que se rellenará la cadena
  * @post Se crea una cadena con el tamaño y el carácter especificados
  */
-Cadena::Cadena(size_t tam, char c) : s_(new char[c+1]), tam_(tam)
-{
-    while(tam --> 0)
-        s_[tam] = c;
-    s_[tam_] = '\0';
+Cadena::Cadena(size_t tam, char c) : tam_(tam), s_(new char[tam_ + 1]) {
+    if (tam_ == 0) {
+        delete[] s_;
+        s_ = vacio;
+    } else {
+        for (size_t i = 0; i < tam_; i++) {
+            s_[i] = c;
+        }
+        s_[tam_] = '\0';
+    }
 }
 
 /**
@@ -20,27 +27,25 @@ Cadena::Cadena(size_t tam, char c) : s_(new char[c+1]), tam_(tam)
  * @param c Cadena a copiar
  * @post Se crea una cadena con el tamaño y el contenido de la cadena a copiar
  */
-Cadena::Cadena(const Cadena& c) : s_(new char[c.tam_+1]), tam_(c.tam_) {
-    copiar(c);
+Cadena::Cadena(const Cadena& c) : tam_(c.tam_), s_(new char[tam_ + 1]) {
+    if (c.s_ == vacio) {
+        delete[] s_;
+        s_ = vacio;
+    } else {
+        strcpy(s_, c.s_);
+        s_[tam_] = '\0';
+    }
 }
 /**
  * @brief Constructor de conversión de la clase Cadena
  * @param c Cadena de caracteres
  * @post Se crea una cadena con el tamaño de la cadena de caracteres
  */
-Cadena::Cadena(const char* c) : s_(new char[length(c)+1]), tam_(length(c)){
-    copiar(c);
+Cadena::Cadena(const char* c): tam_(strlen(c)), s_(new char[tam_ + 1]) {
+    strcpy(s_, c);
+    s_[tam_] = '\0';
 }
 
-/**
- * @brief Constructor de movimiento de la clase Cadena
- * @param c Cadena a mover
- * @post Se crea una cadena con el tamaño y el contenido de la cadena a mover
- */
-Cadena::Cadena(Cadena && c)  noexcept : s_(c.s_), tam_(c.tam_) {
-    c.s_ = nullptr;
-    c.tam_ = 0;
-}
 
 // DESTRUCTOR
 /**
@@ -48,37 +53,10 @@ Cadena::Cadena(Cadena && c)  noexcept : s_(c.s_), tam_(c.tam_) {
  * @post Se libera la memoria reservada para la cadena
  */
 Cadena::~Cadena() {
-    tam_ = 0;
-    delete[] s_;
-}
-
-/**
- * @brief Operador de la clase Cadena
- * @return devuelve la cadena de caracteres
- */
-Cadena::operator const char *() const {return s_;}
-
-// FUNCIONES
-/**
- * @brief Calcula el tamaño de una cadena
- * @param c Cadena de caracteres
- * @return Tamaño de la cadena
- */
-size_t Cadena::length(const char *c) noexcept {
-    size_t i = 0;
-    while(c[i]) i++;
-    return i;
-}
-
-/**
- * @brief Calcula el tamaño de una cadena
- * @param c Cadena de caracteres
- * @return Tamaño de la cadena
- */
-size_t Cadena::length(const char *c) const noexcept {
-    size_t i = 0;
-    while(c[i]) i++;
-    return i;
+    if (s_ != vacio) {
+        delete[] s_;
+        tam_ = 0;
+    }
 }
 
 // OPERADORES ARITMÉTICOS
@@ -88,35 +66,13 @@ size_t Cadena::length(const char *c) const noexcept {
  * @return Cadena concatenada
  */
 Cadena Cadena::operator+=(const Cadena &c) {
-    char *cad_aux = new char[tam_ + 1];
-    strcpy(cad_aux, s_);
-    tam_ += c.tam_;
+    size_t tam = tam_ + c.tam_;
+    char* aux = new char[tam + 1];
+    strcpy(aux, s_);
+    strcat(aux, c.s_);
     delete[] s_;
-
-    s_ = new char[tam_ + 1];
-    strcpy(s_, cad_aux);
-    strcat(s_, c.s_);
-    s_[tam_] = '\0';
-    delete[] cad_aux;
-    return *this;
-}
-
-/**
- * @brief Concatenacion de una cadena y una cadena de caracteres, copia en la primera
- * @param c Cadena de caracteres a concatenar
- * @return Cadena concatenada
- */
-Cadena Cadena::operator+=(const char* c) {
-    char *cad_aux = new char[tam_ + 1];
-    strcpy(cad_aux, s_);
-    tam_ += length(c);
-    delete[] s_;
-
-    s_ = new char[tam_ + 1];
-    strcpy(s_, cad_aux);
-    strcat(s_, c);
-    s_[tam_] = '\0';
-    delete[] cad_aux;
+    s_ = aux;
+    tam_ = tam;
     return *this;
 }
 
@@ -126,35 +82,43 @@ Cadena Cadena::operator+=(const char* c) {
  * @param c Cadena a asignar
  * @return Cadena asignada
  */
- Cadena& Cadena::operator=(const Cadena &c) {
-     if(*this != c) copiar(c);
-     return *this;
- }
-
-/**
- * @brief Asignación de una cadena de caracteres a una cadena
- * @param c Cadena de caracteres a asignar
- * @return Cadena asignada
- */
- Cadena& Cadena::operator=(const char* c) {
-     Cadena aux(c);
-     if (*this != aux) copiar(c);
-     return *this;
- }
-
-/**
- * @brief Asignación de una cadena de caracteres a una cadena
- * @param c Cadena de caracteres a asignar
- * @return Cadena asignada
- */
-Cadena& Cadena::operator=(Cadena&& c) {
-    tam_ = c.tam_;
-    delete[] s_;
-    s_ = c.s_;
-    c.s_ = nullptr;
-    c.tam_ = 0;
+Cadena& Cadena::operator=(const Cadena& c) {
+    if (this != &c) {
+        if (tam_ != 0) {
+            delete[] s_;
+        }
+        tam_ = c.tam_;
+        if (c.s_ == vacio) {
+            s_ = vacio;
+        } else {
+            s_ = new char[tam_ + 1];
+            strcpy(s_, c.s_);
+        }
+    }
     return *this;
 }
+
+/**
+ * @brief Asignación de una cadena de caracteres a una cadena
+ * @param c Cadena de caracteres a asignar
+ * @return Cadena asignada
+ */
+Cadena& Cadena::operator=(const char* s){
+    if(*this != s){
+        if(tam_ != 0){
+            delete[] s_;
+        }
+        tam_ = strlen(s);
+        if(s == vacio){
+            s_ = vacio;
+        }else{
+            s_ = new char[tam_ + 1];
+            strcpy(s_,s);
+        }
+    }
+    return *this;
+}
+
 
 // OPERADORES DE INDICE
 /**
@@ -215,33 +179,8 @@ Cadena Cadena::substr(size_t i, size_t fin) const {
     }
     aux[fin] = '\0';
     Cadena cad_res(aux);
-    delete []aux;
+    delete[] aux;
     return cad_res;
-}
-
-// FUNCIONES AUXILIARES PRIVADAS
-/**
- * @brief Copia una cadena en otra
- * @param c Cadena a copiar
- * @post Se copia la cadena en la cadena actual
- */
-void Cadena::copiar(const Cadena& c) {
-    tam_ = c.tam_;
-    delete[] s_;
-    s_ = new char[tam_ + 1];
-    strcpy(s_, c.s_);
-}
-
-/**
- * @brief Copia una cadena de caracteres en una cadena
- * @param c Cadena de caracteres a copiar
- * @post Se copia la cadena de caracteres en la cadena actual
- */
-void Cadena::copiar(const char* c) {
-    tam_ = length(c);
-    delete[] s_;
-    s_ = new char[tam_ + 1];
-    strcpy(s_, c);
 }
 
 // OPERADORES ARITMÉTICOS

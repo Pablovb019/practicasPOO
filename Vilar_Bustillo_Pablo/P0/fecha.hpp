@@ -45,6 +45,8 @@ public:
 
 private:
     int dia_, mes_, anno_;
+    mutable char crep[40];
+    mutable bool actual;
 
     // FUNCIONES PRIVADAS
     bool comprobar() const;

@@ -70,7 +70,7 @@ int Fecha::diasMes(int mes) const {
  * @param anno Año de la fecha, en caso de ser 0, se toma el año actual
  * @throw Fecha::Invalida si la fecha no es correcta
  */
-Fecha::Fecha(int dia, int mes, int anno) : dia_(dia), mes_(mes), anno_(anno) {
+Fecha::Fecha(int dia, int mes, int anno) : dia_(dia), mes_(mes), anno_(anno), actual(true) {
     std::time_t tiempo_calendario = std::time(nullptr);
     std::tm* tiempo_descompuesto = std::localtime(&tiempo_calendario);
 
@@ -79,6 +79,7 @@ Fecha::Fecha(int dia, int mes, int anno) : dia_(dia), mes_(mes), anno_(anno) {
     if (anno == 0) { anno_ = tiempo_descompuesto->tm_year + 1900; }
 
     if (!comprobar()) throw Fecha::Invalida("Fecha no válida");
+    actual = false;
 
 }
 
@@ -100,6 +101,7 @@ Fecha::Fecha(const char *c) {
     if (anno_ == 0) { anno_ = tiempo_descompuesto->tm_year + 1900; }
 
     if (!comprobar()) throw Fecha::Invalida("Fecha no válida");
+    actual = false;
 }
 
 /**
@@ -109,16 +111,16 @@ Fecha::Fecha(const char *c) {
  */
 Fecha::operator const char *() const {
     setlocale(LC_ALL, "es_ES.UTF-8"); // Para que muestre los meses y días en español
-    static char *aux=new char[40];
-    tm f={};
-    f.tm_mday=dia_;
-    f.tm_mon=mes_-1;
-    f.tm_year=anno_-1900;
+    if (!actual) {
+        struct tm tiempo_descompuesto = {};
+        tiempo_descompuesto.tm_mday = dia_;
+        tiempo_descompuesto.tm_mon = mes_ - 1;
+        tiempo_descompuesto.tm_year = anno_ - 1900;
+        mktime(&tiempo_descompuesto);
+        strftime(crep, 40, "%A %d de %B de %Y", &tiempo_descompuesto);
+    }
 
-    mktime(&f);
-    strftime(aux,40,"%A %d de %B de %Y",&f);
-
-    return aux;
+    return crep;
 }
 
 // Operadores
@@ -130,7 +132,7 @@ Fecha::operator const char *() const {
  * @return Fecha& Referencia a la fecha actualizada
  * @throw Fecha::Invalida si la fecha actualizada no es correcta
  */
-Fecha Fecha::operator+=(int dias) {
+Fecha &Fecha::operator+=(int dias) {
     dia_ += dias;
     actualizarFecha();
     return *this;
